@@ -99,5 +99,9 @@ extension SecondScreen {
     @objc
     private func buttonTapped() {
         navigationController?.popToRootViewController(animated: true)
+        let vc = FirstScreen()
+        let alertController = UIAlertController(title: "TEBRİKLER!", message: "İlk ekrana başarıyla döndün.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
     }
 }
