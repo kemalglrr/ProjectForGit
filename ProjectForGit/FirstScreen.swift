@@ -82,10 +82,10 @@ extension FirstScreen {
     
     private func configureButton() {
         button.layer.cornerRadius = 10
-        button.backgroundColor = .black
+        button.backgroundColor = .lightGray
         button.setTitle("İleri", for: .normal)
         button.titleLabel?.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        button.tintColor = .white
+        button.tintColor = .black
     }
     
     private func configureTargets() {
