@@ -99,6 +99,18 @@ extension FirstScreen {
     @objc
     private func buttonTapped() {
         let vc = SecondScreen()
+        vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
+    }
+}
+
+// MARK: - SecondScreenDelegate
+extension FirstScreen: SecondScreenDelegate {
+    
+    func didClose() {
+        let alertController = UIAlertController(title: "TEBRİKLER!", message: "İlk ekrana başarıyla döndün.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
     }
 }

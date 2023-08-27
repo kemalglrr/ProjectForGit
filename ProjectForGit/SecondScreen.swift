@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol SecondScreenDelegate: AnyObject {
+    func didClose()
+}
+
 class SecondScreen: UIViewController {
+    
+    weak var delegate: SecondScreenDelegate?
     
     private let label: UILabel = {
         let label = UILabel()
@@ -77,7 +83,7 @@ extension SecondScreen {
     private func configureLabel() {
         label.font = UIFont(name: "TrebuchetMS", size: 18)
         label.textColor = .white
-        label.text = "Geri Dönmek İçin Ekranın Sol Sınırından Sağa Doğru Kaydırın Veya Butona Basınız."
+        label.text = "Geri Dönmek İçin Ekranın Sol Sınırından Sağa Doğru Kaydırın Veya Butona Basın."
     }
     
     private func configureButton() {
@@ -99,9 +105,6 @@ extension SecondScreen {
     @objc
     private func buttonTapped() {
         navigationController?.popToRootViewController(animated: true)
-        let vc = FirstScreen()
-        let alertController = UIAlertController(title: "TEBRİKLER!", message: "İlk ekrana başarıyla döndün.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default)
-        alertController.addAction(okAction)
+        delegate?.didClose()
     }
 }
