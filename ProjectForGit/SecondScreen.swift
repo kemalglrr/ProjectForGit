@@ -135,12 +135,12 @@ extension SecondScreen {
     private func nextButtonTapped() {
         let vc = ThirdScreen()
         vc.delegate = self
-        navigationController?.pushViewController(ThirdScreen(), animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc
     private func backButtonTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
         delegate?.didReturnFromSecondScreen()
     }
 }

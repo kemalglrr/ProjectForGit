@@ -104,7 +104,7 @@ extension ThirdScreen {
     
     @objc
     private func backButtonTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        navigationController?.popViewController(animated: true)
         delegate?.didReturnFromThirdScreen()
     }
 }
