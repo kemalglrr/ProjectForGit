@@ -1,19 +1,19 @@
 //
-//  SecondScreen.swift
+//  ThirdScreen.swift
 //  ProjectForGit
 //
-//  Created by Kemal Güler on 26.08.2023.
+//  Created by Kemal Güler on 29.08.2023.
 //
 
 import UIKit
 
-protocol SecondScreenDelegate: AnyObject {
-    func didReturnFromSecondScreen()
+protocol ThirdScreenDelegate: AnyObject {
+    func didReturnFromThirdScreen()
 }
 
-class SecondScreen: UIViewController {
+class ThirdScreen: UIViewController {
     
-    weak var delegate: SecondScreenDelegate?
+    weak var delegate: ThirdScreenDelegate?
     
     private let label: UILabel = {
         let label = UILabel()
@@ -21,14 +21,6 @@ class SecondScreen: UIViewController {
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    private let nextButton: UIButton = {
-        let button = UIButton()
-        button.clipsToBounds = true
-        button.isEnabled = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
     
     private let backButton: UIButton = {
@@ -47,11 +39,10 @@ class SecondScreen: UIViewController {
 }
 
 // MARK: - UILayout
-extension SecondScreen {
+extension ThirdScreen {
     
     private func addSubViews() {
         addLabel()
-        addNextButton()
         addBackButton()
     }
     
@@ -64,20 +55,10 @@ extension SecondScreen {
         ])
     }
     
-    private func addNextButton() {
-        view.addSubview(nextButton)
-        NSLayoutConstraint.activate([
-            nextButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50),
-            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.widthAnchor.constraint(equalToConstant: 100),
-            nextButton.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
     private func addBackButton() {
         view.addSubview(backButton)
         NSLayoutConstraint.activate([
-            backButton.topAnchor.constraint(equalTo: nextButton.bottomAnchor, constant: 50),
+            backButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50),
             backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             backButton.widthAnchor.constraint(equalToConstant: 100),
             backButton.heightAnchor.constraint(equalToConstant: 50)
@@ -86,12 +67,11 @@ extension SecondScreen {
 }
 
 // MARK: - Configure
-extension SecondScreen {
+extension ThirdScreen {
     
     private func configureContents() {
         configureView()
         configureLabel()
-        configureNextButton()
         configureBackButton()
         configureTargets()
     }
@@ -103,15 +83,7 @@ extension SecondScreen {
     private func configureLabel() {
         label.font = UIFont(name: "TrebuchetMS", size: 18)
         label.textColor = .white
-        label.text = "Geri Dönmek İçin Ekranın Sol Sınırından Sağa Doğru Kaydırın Veya Butona Basın."
-    }
-    
-    private func configureNextButton() {
-        nextButton.layer.cornerRadius = 10
-        nextButton.backgroundColor = .lightGray
-        nextButton.setTitle("İleri", for: .normal)
-        nextButton.titleLabel?.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        nextButton.tintColor = .black
+        label.text = "Geri Dönmek İçin Ekranın Sol Sınırından Sağa Doğru Kaydırın Veya Geri Butona Basın."
     }
     
     private func configureBackButton() {
@@ -123,39 +95,16 @@ extension SecondScreen {
     }
     
     private func configureTargets() {
-        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
 }
 
 // MARK: - Actions
-extension SecondScreen {
-    
-    @objc
-    private func nextButtonTapped() {
-        let vc = ThirdScreen()
-        vc.delegate = self
-        navigationController?.pushViewController(ThirdScreen(), animated: true)
-    }
+extension ThirdScreen {
     
     @objc
     private func backButtonTapped() {
         navigationController?.popToRootViewController(animated: true)
-        delegate?.didReturnFromSecondScreen()
-    }
-}
-
-// MARK: - ThirdScreenDelegate
-extension SecondScreen: ThirdScreenDelegate {
-    
-    func showAlert() {
-        let alertController = UIAlertController(title: "Tebrikler!", message: "Üçüncü ekrandan.", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Tamam", style: .default)
-        alertController.addAction(okAction)
-        present(alertController, animated: true)
-    }
-    
-    func didReturnFromThirdScreen() {
-        showAlert()
+        delegate?.didReturnFromThirdScreen()
     }
 }

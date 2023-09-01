@@ -16,7 +16,7 @@ class FirstScreen: UIViewController {
         return label
     }()
     
-    let button: UIButton = {
+    let nextButton: UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
         button.isEnabled = true
@@ -27,7 +27,7 @@ class FirstScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
-        configureContent()
+        configureContents()
     }
 }
 
@@ -49,12 +49,12 @@ extension FirstScreen {
     }
     
     private func addButton() {
-        view.addSubview(button)
+        view.addSubview(nextButton)
         NSLayoutConstraint.activate([
-            button.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.widthAnchor.constraint(equalToConstant: 100),
-            button.heightAnchor.constraint(equalToConstant: 50)
+            nextButton.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 50),
+            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextButton.widthAnchor.constraint(equalToConstant: 100),
+            nextButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
@@ -62,7 +62,7 @@ extension FirstScreen {
 // MARK: - Configure
 extension FirstScreen {
     
-    private func configureContent() {
+    private func configureContents() {
         configureView()
         configureLabel()
         configureButton()
@@ -81,15 +81,15 @@ extension FirstScreen {
     }
     
     private func configureButton() {
-        button.layer.cornerRadius = 10
-        button.backgroundColor = .lightGray
-        button.setTitle("İleri", for: .normal)
-        button.titleLabel?.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
-        button.tintColor = .black
+        nextButton.layer.cornerRadius = 10
+        nextButton.backgroundColor = .lightGray
+        nextButton.setTitle("İleri", for: .normal)
+        nextButton.titleLabel?.font = UIFont(name: "TrebuchetMS-Bold", size: 20)
+        nextButton.tintColor = .black
     }
     
     private func configureTargets() {
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
     }
 }
 
@@ -97,7 +97,7 @@ extension FirstScreen {
 extension FirstScreen {
     
     @objc
-    private func buttonTapped() {
+    private func nextButtonTapped() {
         let vc = SecondScreen()
         vc.delegate = self
         navigationController?.pushViewController(vc, animated: true)
@@ -107,10 +107,29 @@ extension FirstScreen {
 // MARK: - SecondScreenDelegate
 extension FirstScreen: SecondScreenDelegate {
     
-    func didClose() {
-        let alertController = UIAlertController(title: "TEBRİKLER!", message: "İlk ekrana başarıyla döndün.", preferredStyle: .alert)
+    func showAlert() {
+        let alertController = UIAlertController(title: "Tebrikler!", message: "İkinci ekrandan birinci ekrana döndün.", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Tamam", style: .default)
         alertController.addAction(okAction)
         present(alertController, animated: true)
+    }
+    
+    func didReturnFromSecondScreen() {
+        showAlert()
+    }
+}
+
+// MARK: - ThirdScreenDelegate
+extension FirstScreen: ThirdScreenDelegate {
+    
+    func showThirdAlert() {
+        let alertController = UIAlertController(title: "Tebrikler!", message: "Üçüncü ekrandan.", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Tamam", style: .default)
+        alertController.addAction(okAction)
+        present(alertController, animated: true)
+    }
+    
+    func didReturnFromThirdScreen() {
+        showThirdAlert()
     }
 }
